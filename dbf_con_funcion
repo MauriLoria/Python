@@ -1,0 +1,64 @@
+from simpledbf import Dbf5
+import pandas as pd
+import os
+import dbf
+
+dbfPath = "c:/AVILES/LOCALIDA.DBF"
+if os.path.exists(dbfPath)==False:
+    exit()
+
+
+df = Dbf5(dbfPath, codec= "latin1").to_dataframe()
+print(type(df["CODPOSTAL"]))
+
+def agregar(codpostal, localidad, codtele, provincia, df):
+    nuevo = pd.DataFrame({'CODPOSTAL': codpostal, 'LOCALIDAD': localidad,
+                        'CODTELE': codtele, 'PROVINCIA': provincia}, index=['row3'])
+    df1 = pd.concat([df, nuevo], ignore_index=True)
+    df1 = df1.sort_values(by= "CODPOSTAL")
+    return df1
+
+codigo_postal, localidad, codigo_telef, provincia, otro = 0,'','','', "S"
+
+while otro == "S" or otro == "S":
+    codigo_postal = int(input("Ingrese un nuevo Código Postal: "))
+    localidad = input("Ingrese la Localidad: ")
+    codigo_telef = input("Ingrese el Código Telefónico: ")
+    provincia = input("Ingrese una Provincia: ")
+    otro = input("Quiere ingresar otro? s/n: ")
+
+df3 = agregar(codigo_postal, localidad, codigo_telef, provincia, df)
+df3 = df3.sort_values(by= "CODPOSTAL")
+print(df3)
+
+df3 = df3.fillna({
+    'CODPOSTAL': '',
+    'LOCALIDAD': '',
+    'CODTELE': '',
+    'PROVINCIA': ''
+})
+
+nuevo_dbf = "c:/AVILES/LOCALIDAD.DBF"
+
+estructura = 'CODPOSTAL C(4); LOCALIDAD C(20); CODTELE C(5); PROVINCIA C(20)'
+
+if os.path.exists(nuevo_dbf):
+    os.remove(nuevo_dbf)
+
+tabla = dbf.Table(
+    nuevo_dbf,
+    estructura,
+    codepage='cp1252'
+)
+tabla.open(mode=dbf.READ_WRITE)
+
+for _, fila in df3.iterrows():
+    tabla.append((
+        str(fila['CODPOSTAL']),
+        str(fila['LOCALIDAD']),
+        str(fila['CODTELE']),
+        str(fila['PROVINCIA'])
+    ))
+
+tabla.close()
+
