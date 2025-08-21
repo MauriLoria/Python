@@ -1,0 +1,6 @@
+git add .      ### sincroniza todos los archivos de esa carpeta (ubicacion)
+git commit -m "comentario"      ### comentario
+git push       ### publica en git hub
+
+
+git pull   ### actualiza los archivos de git hub a la carpeta
