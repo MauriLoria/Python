@@ -1,0 +1,38 @@
+git init   ## Inicia el proceso de seguimiento por Git
+
+git add .      ### sincroniza todos los archivos de esa carpeta (ubicacion)
+git commit -m "comentario"      ### comentario
+
+
+git push       ### publica en git hub
+
+git pull   ### actualiza los archivos de git hub a la carpeta
+
+git status  ### Indica los componentes de la carpeta
+
+git log    ## Informe de los movimientos
+
+git branch ### Indica las ramas 
+
+git branch ckeckout rama_1   ### cambio a la rama_1
+
+git checkout rama1     ## Crea la rama_1
+
+git checkout -b rama_2  ### Crea una copia de los archivos en la rama_2 y nos lleva a esa rama
+
+git diff --name-status rama_1 .. master
+
+git merge rama_2 ### Reemplaza el/os arhivos a la ubicación actual.
+
+gitignore.txt	### archivo donde se detallan los archivos que no queremos sincronizar
+
+
+
+git clone https://github.com/dcorvala/Diplo_Github ### Trae el repositorio indicado en la ubicación donde estamos
+
+git remote add origin https//GitHub.com/dcorvala/Diplo_Github   ### Conecta el reposito con GitHub
+
+git pull origin main      ### Copia al master
+
+git push origin master    ### copia al GitHub
+
